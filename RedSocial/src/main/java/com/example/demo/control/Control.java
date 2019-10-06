@@ -116,6 +116,17 @@ public class Control {
 		log.info("Publicacion borrada desde el front");
 	}
 	
+	@GetMapping("/friends/{nick}")
+	public List<Usuario> findAllFriends(@PathVariable String nick){
+		return servicio.findAllFriends(nick);
+	}
+	
+	@ResponseStatus(value = HttpStatus.OK)
+	@PostMapping("friends/add/{nick}")
+	public void addFriend(@PathVariable(name = "nick") String nick, @RequestBody(required = true) Usuario usuario) {
+		servicio.addFriend(servicio.findByNick(nick), usuario );
+		
+	}
 	
 
 

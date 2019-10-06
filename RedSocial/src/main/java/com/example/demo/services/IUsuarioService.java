@@ -13,5 +13,7 @@ public interface IUsuarioService {
 	public ArrayList<Usuario> listar();
 	public Usuario findByNick(String nick);
 	public void addPublicacion(Publicacion publicacion);
+	public List<Usuario> findAllFriends(String nick);
+	public void addFriend(Usuario usuario, Usuario amigo);
 	
 }

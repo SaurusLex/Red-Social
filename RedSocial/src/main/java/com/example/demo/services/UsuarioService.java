@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.control.Control;
 import com.example.demo.model.Publicacion;
@@ -60,12 +61,18 @@ public class UsuarioService implements IUsuarioService {
 		
 	}
 
-//	public void addPublicacion(Publicacion publicacion) {
-//		Usuario us = findByNick("alex");
-//		log.info(us.toString());
-//		us.publicaciones.add(publicacion);
-//		log.info(us.toString());
-//		dao.saveAndFlush(us);
-//	}
+	@Override
+	public List<Usuario> findAllFriends(String nick) {
+		// TODO Auto-generated method stub
+		return dao.findMisAmigosByNick(nick);
+	}
+
+	@Transactional
+	@Override
+	public void addFriend(Usuario usuario, Usuario amigo) {
+			usuario.addFriend(amigo);
+	}
+
+
 
 }

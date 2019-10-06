@@ -18,6 +18,10 @@ import com.example.demo.model.Usuario;
 public interface IUsuarioDAO extends JpaRepository<Usuario, Integer> {
 
 	Usuario findUsuarioByNick(@NotNull String nick);
+	@Query("SELECT misAmigos FROM Usuario u where u.nick=:nick")
+	List<Usuario> findMisAmigosByNick(String nick);
+	
+	
 	
 	
 	
