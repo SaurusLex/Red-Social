@@ -31,7 +31,6 @@ public class PublicacionService implements IPublicacionService {
 		} catch (EntityExistsException e) {
 			// TODO: handle exception
 		}
-		
 	}
 
 	@Override

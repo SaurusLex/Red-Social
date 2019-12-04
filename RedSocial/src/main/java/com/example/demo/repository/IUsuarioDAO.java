@@ -25,4 +25,5 @@ public interface IUsuarioDAO extends JpaRepository<Usuario, Integer> {
 	
 	
 	
+	
 }

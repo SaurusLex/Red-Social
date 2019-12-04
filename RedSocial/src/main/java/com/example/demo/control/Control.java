@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.model.Perfil;
 import com.example.demo.model.Publicacion;
 import com.example.demo.model.Usuario;
 
@@ -45,7 +46,7 @@ import org.apache.commons.io.*;
 import org.slf4j.*;
 
 @Slf4j
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"*"}, allowedHeaders = {"*"})
 @Transactional
 @RestController
 public class Control {
@@ -62,6 +63,7 @@ public class Control {
 	public void registro(@RequestBody(required = false) Usuario usuario) {
 		servicio.addUsuario(usuario);
 		log.info("Usuario añadido con exito desde front");
+		
 	}
 
 	// Obtiene la lista de usuarios
@@ -116,18 +118,55 @@ public class Control {
 		log.info("Publicacion borrada desde el front");
 	}
 	
-	@GetMapping("/friends/{nick}")
-	public List<Usuario> findAllFriends(@PathVariable String nick){
-		return servicio.findAllFriends(nick);
-	}
+//	@GetMapping("/friends/{nick}")
+//	public List<Usuario> findAllFriends(@PathVariable String nick){
+//		return servicio.findAllFriends(nick);
+//	}
 	
 	@ResponseStatus(value = HttpStatus.OK)
-	@PostMapping("friends/add/{nick}")
+	@PostMapping("/friends/add/{nick}")
 	public void addFriend(@PathVariable(name = "nick") String nick, @RequestBody(required = true) Usuario usuario) {
 		servicio.addFriend(servicio.findByNick(nick), usuario );
 		
 	}
 	
+	@ResponseStatus(value = HttpStatus.OK)
+	@PostMapping("/friends/delete/{nick}")
+	public void deleteFriend(@PathVariable(name = "nick") String nick, @RequestBody(required = true) Usuario usuario) {
+		System.out.println("voy a borrar un amigo");
+		servicio.removeFriend(servicio.findByNick(nick), usuario );
+		
+	}
+	
+//	@GetMapping("/friendof/{nick}")
+//	public List<Usuario> findAllFriendOf(@PathVariable String nick){
+//		return servicio.findAllFriendOf(nick);
+//	}
+	
+	@GetMapping("/solicitudes/{nick}")
+	public List<Usuario> getSolicitudes(@PathVariable String nick){
+		return servicio.getSolicitudes(nick);
+	}
+	
+	@GetMapping("/friends/{nick}")
+	public List<Usuario> getFriends(@PathVariable String nick){
+		return servicio.getFriends(nick);
+	}
+	
+	@PostMapping("/perfil/{nick}")
+	public void setPerfil(@PathVariable String nick, @RequestBody Perfil perfil) {
+		servicio.setPerfil(perfil, nick);
+	}
+	
+	@GetMapping("/perfil/{nick}")
+	public Perfil getPerfil(@PathVariable String nick) {
+		return servicio.findByNick(nick).getPerfil();
+	}
+	
+	@GetMapping("/solicitados/{nick}")
+	public List<Usuario> getSolicitados(@PathVariable String nick){
+		return servicio.findAllFriends(nick);
+	}
 
 
 }
